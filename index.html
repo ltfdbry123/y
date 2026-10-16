@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hati-Hati Di Jalan Ya Mba Dian! 🧳✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Quicksand', sans-serif; }
+        .font-bubble { font-family: 'Fredoka', cursive; }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .shake-animation { animation: shake 0.5s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-amber-100 via-orange-100 to-rose-100 min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+
+    <!-- Container Utama -->
+    <div id="main-card" class="bg-white/85 backdrop-blur-md p-6 sm:p-8 rounded-3xl shadow-2xl max-w-md w-full text-center relative z-10 border-2 border-white/80 transition-all duration-300">
+        
+        <!-- Illustration / Emoji Area -->
+        <div class="relative w-36 h-36 mx-auto mb-4 float-animation flex items-center justify-center">
+            <span id="header-emoji" class="text-8xl filter drop-shadow-md">🌇</span>
+        </div>
+
+        <!-- Judul Utama -->
+        <h1 id="title-text" class="text-2xl font-bold font-bubble text-orange-600 mb-2">
+            Mba Dian, Hari Minggu Sore Nih! 🧳🚌
+        </h1>
+
+        <!-- Pesan Penyesalan/Bujukan -->
+        <p id="sub-text" class="text-gray-600 text-sm leading-relaxed mb-6">
+            Ciee Mba Dian yang mau berangkat pulang ke Jawa sore ini... Hati-hati di jalan ya Mba! Semoga perjalanannya lancar, aman, dan selamat sampai tujuan. Jangan lupa cek barang bawaannya biar gak ada yang ketinggalan! 🎒✨
+        </p>
+
+        <!-- Kartu Pilihan Oleh-Oleh -->
+        <div id="checklist-card" class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 text-left shadow-inner">
+            <p class="text-xs font-bold text-orange-500 mb-2 uppercase tracking-wide">✨ Titipan Oleh-Oleh Wajib Nanti:</p>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+                <button onclick="selectOleh('Kuliner Khas 🍲', this)" class="oleh-btn p-2.5 rounded-xl border border-amber-200 bg-white hover:bg-amber-100 transition font-medium text-gray-700">Kuliner Khas 🍲</button>
+                <button onclick="selectOleh('Bakpia & Jajanan 🥮', this)" class="oleh-btn p-2.5 rounded-xl border border-amber-200 bg-white hover:bg-amber-100 transition font-medium text-gray-700">Bakpia & Jajanan 🥮</button>
+                <button onclick="selectOleh('Batik / Kaos 👕', this)" class="oleh-btn p-2.5 rounded-xl border border-amber-200 bg-white hover:bg-amber-100 transition font-medium text-gray-700">Batik / Kaos 👕</button>
+                <button onclick="selectOleh('Foto Pulkam 📸', this)" class="oleh-btn p-2.5 rounded-xl border border-amber-200 bg-white hover:bg-amber-100 transition font-medium text-gray-700">Foto Pulkam 📸</button>
+            </div>
+        </div>
+
+        <!-- Area Tombol Interaktif -->
+        <div class="flex flex-col gap-3 relative min-h-[110px] justify-center" id="btn-container">
+            <button onclick="acceptJourney()" id="yes-btn" class="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-lg shadow-orange-200 transition transform active:scale-95 text-sm z-10">
+                Siap! Makasih yaa! 🥰
+            </button>
+            <button onmouseover="moveNoButton()" onclick="moveNoButton()" id="no-btn" class="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold rounded-2xl transition text-sm">
+                Gak Mau Dibawain Oleh-oleh! 😜
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Script Interaktif -->
+    <script>
+        let noClickCount = 0;
+        let selectedOlehOleh = "";
+
+        // Teks usil saat tombol kabur
+        const noTexts = [
+            "Gak Mau Dibawain Oleh-oleh! 😜",
+            "Pelit amat sih Mba Dian... 🥺",
+            "Awas ya kalau gak bawa jajanan! 😭",
+            "Nanti tak kangenin loh Mba! 😜"
+        ];
+
+        // Tombol usil kabur
+        function moveNoButton() {
+            const noBtn = document.getElementById('no-btn');
+            const yesBtn = document.getElementById('yes-btn');
+            
+            if (noClickCount < noTexts.length) {
+                noBtn.innerText = noTexts[noClickCount];
+            } else {
+                noBtn.innerText = "Harus dibawain pokoknya Mba! 😤";
+            }
+
+            noClickCount++;
+
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = `${currentSize + 2}px`;
+            yesBtn.style.padding = `${14 + noClickCount * 2}px`;
+
+            const card = document.getElementById('main-card');
+            card.classList.add('shake-animation');
+            setTimeout(() => card.classList.remove('shake-animation'), 500);
+        }
+
+        // Pilih oleh-oleh
+        function selectOleh(olehName, btn) {
+            selectedOlehOleh = olehName;
+            document.querySelectorAll('.oleh-btn').forEach(b => {
+                b.classList.remove('bg-orange-500', 'text-white', 'border-orange-500');
+                b.classList.add('bg-white', 'text-gray-700', 'border-amber-200');
+            });
+            btn.classList.remove('bg-white', 'text-gray-700', 'border-amber-200');
+            btn.classList.add('bg-orange-500', 'text-white', 'border-orange-500');
+        }
+
+        // Ketika tombol "Siap!" diklik
+        function acceptJourney() {
+            document.getElementById('header-emoji').innerText = '🏠';
+            document.getElementById('title-text').innerText = 'Sugeng Rawuh Teng Jawa Mba Dian! 🌾🏡';
+            document.getElementById('title-text').className = 'text-2xl font-bold font-bubble text-emerald-600 mb-2';
+            
+            document.getElementById('sub-text').className = 'text-gray-700 text-sm leading-relaxed mb-6 font-bubble';
+            document.getElementById('sub-text').innerText = 'Selamat kumpul keluarga di Jawa ya Mba Dian! Salam buat keluarga di rumah. Jangan lupa istirahat yang cukup selama perjalanan malam nanti! Hugs & Kisses! 🤗✨';
+            
+            document.getElementById('checklist-card').innerHTML = `
+                <div class="text-center py-2">
+                    <span class="text-4xl">❤️🌾🍛</span>
+                    <p class="text-xs font-bold text-emerald-600 mt-2">Selamat Sampai Tujuan Mba Dian Sayang! ✨</p>
+                </div>
+            `;
+            document.getElementById('checklist-card').className = 'bg-emerald-50 border border-emerald-200 rounded-2xl p-4 mb-6 shadow-inner';
+
+            document.getElementById('btn-container').innerHTML = `
+                <button onclick="sendWhatsApp()" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-200 transition transform active:scale-95 text-sm">
+                    Kirim Pesan via WhatsApp 💬
+                </button>
+            `;
+
+            createConfetti();
+        }
+
+        // Efek visual bertebaran
+        function createConfetti() {
+            for (let i = 0; i < 30; i++) {
+                const item = document.createElement('div');
+                item.innerText = ['🌇', '🚌', '🌾', '🧳', '❤️', '✨'][Math.floor(Math.random() * 6)];
+                item.style.position = 'fixed';
+                item.style.left = Math.random() * 100 + 'vw';
+                item.style.top = '100vh';
+                item.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                item.style.transition = 'all 3s ease-out';
+                item.style.opacity = '1';
+                item.style.zIndex = '100';
+
+                document.body.appendChild(item);
+
+                setTimeout(() => {
+                    item.style.top = '-10vh';
+                    item.style.left = (parseFloat(item.style.left) + (Math.random() * 20 - 10)) + 'vw';
+                    item.style.opacity = '0';
+                }, 50);
+
+                setTimeout(() => item.remove(), 3000);
+            }
+        }
+
+        // Kirim ucapan ke WhatsApp Mba Dian
+        function sendWhatsApp() {
+            const phone = "6281234567890"; // Ganti dengan nomor WhatsApp Mba Dian
+            let olehText = selectedOlehOleh ? `Titip oleh-oleh ini yaaa Mba: ${selectedOlehOleh} 😋` : "Jangan lupa dibawain oleh-oleh yaaa Mba Dian! 😜";
+            
+            const message = encodeURIComponent(`Halo Mba Dian! Hati-hati ya sore ini jalan pulang ke Jawa 🌇🧳✨\n\n${olehText}\n\nSemoga lancar dan selamat sampai tujuan! ❤️`);
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
